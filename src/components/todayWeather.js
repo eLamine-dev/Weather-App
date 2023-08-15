@@ -1,16 +1,18 @@
-const template = /*html*/ `
-      <div class="location">Now in London</div>
-      <div class="wether-summary"></div>
-      <div class="temperature"></div>
-`;
-
 class TodayWeather extends HTMLElement {
-   constructor() {
+   constructor(data) {
       super();
-      this.innerHTML = template;
+      this.render(data);
    }
 
-   connectedCallback() {}
+   render(data) {
+      this.innerHTML = html` <div class="location">Now in ${data.location}</div>
+         <div class="wether-summary">
+            <div class="icon"></div>
+            <div class="summary">${data.summary}</div>
+         </div>
+         <div class="temperature"></div>
+         <div class="feels-like"></div>`;
+   }
 }
 
 customElements.define('today-weather', TodayWeather);

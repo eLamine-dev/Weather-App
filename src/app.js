@@ -5,7 +5,7 @@ import TodayWeather from './components/todayWeather';
 function start() {
    // const promise = await Promise.resolve('async working');
 
-   const weather = new TodayWeather();
+   const weather = new TodayWeather({ location: 'Kyiv' });
    document.body.appendChild(weather);
 
    // console.log(promise);
