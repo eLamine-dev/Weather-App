@@ -1,9 +1,14 @@
-async function start() {
-   const promise = await Promise.resolve('async working');
+import './assets/reset.css';
+import './assets/style.css';
+import TodayWeather from './components/todayWeather';
 
-   console.log(promise);
+function start() {
+   // const promise = await Promise.resolve('async working');
+
+   const weather = new TodayWeather();
+   document.body.appendChild(weather);
+
+   // console.log(promise);
 }
 
 start();
-
-console.log('webpack working');
