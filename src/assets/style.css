@@ -8,8 +8,27 @@ body {
 
 .app-wrapper {
    border: 2px black solid;
-   height: 70vh;
+   height: 80vh;
    width: 80vw;
    display: grid;
    grid-template-columns: 1fr auto;
+}
+
+.main-section {
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   grid-template-rows: auto 1fr;
+}
+
+.weather-now {
+   display: flex;
+   align-items: flex-end;
+}
+
+.side-info {
+   width: 300px;
+   display: flex;
+   background-color: aqua;
+   flex-direction: column;
+   justify-content: space-between;
 }
