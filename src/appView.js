@@ -12,7 +12,7 @@ class AppView extends HTMLElement {
    }
 
    render(data) {
-      this.innerHTML = `
+      this.innerHTML = html`
          <div class="app-wrapper">
             <div class="main-section">
                <div class="logo">Weather</div>
