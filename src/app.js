@@ -1,7 +1,7 @@
 import './assets/reset.css';
 import './assets/style.css';
 import AppView from './appView';
-import { getLocationCoordinates, fetchApiData } from './utils/getApiData';
+import fetchApiData from './utils/getApiData';
 
 document.addEventListener('DOMContentLoaded', () => {
    start();
