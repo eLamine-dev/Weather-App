@@ -1,12 +1,12 @@
 import { format, fromUnixTime, isToday, isTomorrow } from 'date-fns';
 
-export default async function fetchApiData(location) {
-   const coordinates = await getLocationCoordinates(location);
-   const apiData = await getApiWeatherData(coordinates);
+export default async function fetchweatherData(location) {
+   const cityData = await getLocationCoordinates(location);
+   const weatherData = await getApiWeatherData(cityData);
 
-   const processedData = processFetchedData(apiData);
+   const processedData = processFetchedData(weatherData, cityData);
 
-   return apiData;
+   return processedData;
 }
 
 async function getLocationCoordinates(location) {
@@ -22,53 +22,54 @@ async function getLocationCoordinates(location) {
 //    const yesterday = new Date().setDate(new Date().getDate() - 1);
 //    const formattedYesterday = format(yesterday, 'yyyy-MM-dd');
 
-//    const apiData = await fetch(
+//    const weatherData = await fetch(
 //       `https://api.openweathermap.org/data/3.0/onecall/day_summary?lat=${coordinates.lat}&lon=${coordinates.lon}&date=${formattedYesterday}&units=metric&appid=163a88340501cc3338e7b7a9919e470f`
 //    );
 
-//    const apiDataJson = await apiData.json();
-//    return apiDataJson;
+//    const weatherDataJson = await weatherData.json();
+//    return weatherDataJson;
 // }
 
-async function getApiWeatherData(coordinates) {
+async function getApiWeatherData(cityData) {
    const response = await fetch(
-      `https://api.openweathermap.org/data/3.0/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&units=metric&appid=163a88340501cc3338e7b7a9919e470f`
+      `https://api.openweathermap.org/data/3.0/onecall?lat=${cityData.lat}&lon=${cityData.lon}&units=metric&appid=163a88340501cc3338e7b7a9919e470f`
    );
 
-   const apiData = await response.json();
-   return apiData;
+   const weatherData = await response.json();
+   return weatherData;
 }
 
-function processFetchedData(apiData) {
+function processFetchedData(weatherData, cityData) {
    const processedData = {
+      location: { name: cityData.name, country: cityData.country },
       current: {
-         temp: apiData.current.temp,
-         feels_like: apiData.current.feels_like,
-         humidity: apiData.current.humidity,
+         temp: weatherData.current.temp,
+         feels_like: weatherData.current.feels_like,
+         humidity: weatherData.current.humidity,
       },
 
       today: {
-         humidity: apiData.daily[0].humidity,
-         wind_speed: apiData.daily[0].wind_speed,
-         wind_deg: apiData.daily[0].wind_deg,
-         sunrise: fromUnixTime(apiData.daily[0].sunrise),
-         sunset: fromUnixTime(apiData.daily[0].sunset),
-         pressure: apiData.daily[0].pressure,
-         uvi: apiData.daily[0].uvi,
-         precipitation: apiData.daily[0].pop * 100,
+         humidity: weatherData.daily[0].humidity,
+         wind_speed: weatherData.daily[0].wind_speed,
+         wind_deg: weatherData.daily[0].wind_deg,
+         sunrise: fromUnixTime(weatherData.daily[0].sunrise),
+         sunset: fromUnixTime(weatherData.daily[0].sunset),
+         pressure: weatherData.daily[0].pressure,
+         uvi: weatherData.daily[0].uvi,
+         precipitation: weatherData.daily[0].pop * 100,
       },
 
       daily: [],
    };
 
-   for (let i = 0; i <= 7; i++) {
-      const day = fromUnixTime(apiData.daily[i].dt);
+   for (let i = 0; i < 7; i++) {
+      const day = fromUnixTime(weatherData.daily[i].dt);
       const dayData = {
-         icon: apiData.daily[i].weather[0].icon,
-         main: apiData.daily[i].weather[0].main,
+         icon: weatherData.daily[i].weather[0].icon,
+         main: weatherData.daily[i].weather[0].main,
          temp: {
-            max: apiData.daily[i].temp.max,
-            min: apiData.daily[i].temp.min,
+            max: weatherData.daily[i].temp.max,
+            min: weatherData.daily[i].temp.min,
          },
       };
 

@@ -10,11 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
 async function start() {
    // const promise = await Promise.resolve('async working');
 
-   const appView = new AppView({ location: 'Kyiv' });
-   document.body.appendChild(appView);
+   const data = await fetchApiData('ferdjioua');
 
-   const cordinates = await fetchApiData('ferdjioua');
-   console.log(cordinates);
+   const appView = new AppView(data);
+   document.body.appendChild(appView);
+   // console.log(cordinates);
 
    // console.log(promise);
 }

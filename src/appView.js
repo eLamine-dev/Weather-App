@@ -25,7 +25,7 @@ class AppView extends HTMLElement {
                   <button type="submit"></button>
                </form>
                <div class="weather-now">
-                  <div class="location">Now in ${data.location}</div>
+                  <div class="location">Now in ${data.location.name}, ${data.location.country}</div>
                   <div class="temperature">42</div>
                   <div class="wether-summary">It is chilly today</div>
                </div>
