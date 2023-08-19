@@ -46,7 +46,6 @@ class AppView extends HTMLElement {
                <div class="sunset">
                   <div class="title">Sunset</div>
                   <div class="value">${data.today.sunset}</div>
-               
                </div>
             </div>
             <div class="extra-data">
@@ -74,6 +73,12 @@ class AppView extends HTMLElement {
                <div class="wind">
                   <div class="wind-speed">${data.today.wind_speed} km/h</div>
                   <div class="wind-direction">${data.today.wind_deg}</div>
+
+                  <div class="compass">
+                     <div class="arrows"></div>
+                     <div class="dt-n-s"></div>
+                     <div class="dt-w-e"></div>
+                  </div>
                </div>
             </div>
          </div>
@@ -99,6 +104,10 @@ class AppView extends HTMLElement {
       });
 
       this.updateTimeDate();
+
+      this.querySelector(
+         '.compass .arrows'
+      ).style.transform = `rotate(${data.today.wind_deg}deg)`;
    }
 
    updateTimeDate() {
