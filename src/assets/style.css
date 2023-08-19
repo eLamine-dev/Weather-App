@@ -31,7 +31,7 @@ app-view {
 .side-info {
    width: 300px;
    display: flex;
-   background-color: blue;
+   /* background-color: blue; */
    flex-direction: column;
    justify-content: space-between;
 }
@@ -104,15 +104,6 @@ app-view {
    background-color: rgba(0, 150, 136, 0.8);
 }
 
-/* {
-   position: relative;
-   width: 100%;
-   height: 100vh;
-   background-color: #EEECE9;
-   display: flex;
-   justify-content: center;
-   align-items: center;
- } */
 .dt-w-e {
    display: flex;
    justify-content: center;
@@ -194,4 +185,8 @@ app-view {
    border-radius: 50%;
    border: 10px solid #e2dcc2;
    transform: scale(0.4);
+}
+
+#hourly-temp-chart {
+   width: 900px;
 }

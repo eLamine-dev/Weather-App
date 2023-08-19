@@ -50,6 +50,8 @@ function processFetchedData(weatherData, cityData) {
       },
 
       daily: [],
+
+      hourly: { hours: [], temperatures: [] },
    };
 
    for (let i = 0; i < 7; i++) {
@@ -71,6 +73,15 @@ function processFetchedData(weatherData, cityData) {
          dayData.name = format(day, 'EEEE');
       }
       processedData.daily.push(dayData);
+   }
+
+   for (let i = 0; i < 24; i += 4) {
+      processedData.hourly.hours.push(
+         format(fromUnixTime(weatherData.hourly[i].dt), 'kk:mm')
+      );
+      processedData.hourly.temperatures.push(
+         Math.round(weatherData.hourly[i].temp)
+      );
    }
 
    return processedData;

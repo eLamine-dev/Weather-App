@@ -2,6 +2,7 @@ import './assets/reset.css';
 import './assets/style.css';
 import AppView from './appView';
 import fetchApiData from './utils/getApiData';
+import { fromUnixTime } from 'date-fns';
 
 document.addEventListener('DOMContentLoaded', () => {
    displayApp('London');

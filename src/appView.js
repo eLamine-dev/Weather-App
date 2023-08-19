@@ -9,8 +9,37 @@ import { format } from 'date-fns';
 class AppView extends HTMLElement {
    constructor(data) {
       super();
-      this.render(data);
+      this.data = data;
+      console.log(data);
+      this.render(this.data);
       // this.appendChild(template.content.cloneNode(true));
+   }
+
+   connectedCallback() {
+      const xValues = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150];
+      const yValues = [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15];
+
+      new Chart(document.getElementById('hourly-temp-chart'), {
+         type: 'line',
+         data: {
+            labels: this.data.hourly.hours,
+            datasets: [
+               {
+                  fill: false,
+                  lineTension: 0,
+                  backgroundColor: 'rgba(0,0,255,1.0)',
+                  borderColor: 'rgba(0,0,255,0.1)',
+                  data: this.data.hourly.temperatures,
+               },
+            ],
+         },
+         options: {
+            legend: { display: false },
+            scales: {
+               yAxes: [{ ticks: { min: 6, max: 16 } }],
+            },
+         },
+      });
    }
 
    render(data) {
@@ -81,6 +110,9 @@ class AppView extends HTMLElement {
                   </div>
                </div>
             </div>
+
+<canvas id="hourly-temp-chart" ></canvas>
+
          </div>
       `;
 
