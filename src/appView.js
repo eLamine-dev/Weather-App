@@ -4,6 +4,8 @@
 //    <div class="side-info"></div>
 // `;
 
+import { format } from 'date-fns';
+
 class AppView extends HTMLElement {
    constructor(data) {
       super();
@@ -13,49 +15,50 @@ class AppView extends HTMLElement {
 
    render(data) {
       this.innerHTML = `
-         <div class="app-wrapper">
-            <div class="main-section">
-               <div class="logo">Weather</div>
-               <div class="time-date-info">
-                  <div class="time">10:00</div>
-                  <div class="date">16/2/2024</div>
+         <div class="main-section">
+            <div class="logo">Weather</div>
+            <div class="time-date-info"></div>
+
+            <form class="search-bar">
+               <input type="text" class="textbox" placeholder="Search City..." />
+               <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+            <div class="weather-now">
+               <div class="location">
+                  Today in ${data.location.name}, ${data.location.country}
                </div>
-               <form class="location-search">
-                  <input type="text" />
-                  <button type="submit"></button>
-               </form>
-               <div class="weather-now">
-                  <div class="location">Today in ${data.location.name}, ${data.location.country}</div>
-                  <div class="temperature">${data.current.temp}°C</div></div>
-                  <div class="real-feel">${data.current.feels_like}°C</div>
-                  <div class="humidity">${data.current.humidity}%</div>
-                  <div class="wether-summary">${data.today.summary}</div>
-               </div>
+               <div class="temperature">${data.current.temp}°C</div>
+               <div class="real-feel">${data.current.feels_like}°C</div>
+               <div class="humidity">${data.current.humidity}%</div>
+               <div class="wether-summary">${data.today.summary}</div>
             </div>
-            <div class="side-info">
-               <div class="days-forecast">
-               </div>
-               <div class="sun-times">
-                  <div class="sunrise">Sunrise ${data.today.sunrise}</div>
-                  <div class="sunset">sunset ${data.today.sunset}</div>
-               </div>
-               <div class="today-extra">
-                  <div class="humidity">${data.today.humidity}%</div>
-                  <div class="real-feel">40</div>
-                  <div class="uv">7</div>
-                  <div class="pressure">1032 mbar</div>
-                  <div class="rain-chance">20%</div>
-               </div>
-               <div class="wind"></div>
+         </div>
+         <div class="side-info">
+            <div class="days-forecast"></div>
+            <div class="sun-times">
+               <div class="sunrise">Sunrise ${data.today.sunrise}</div>
+               <div class="sunset">sunset ${data.today.sunset}</div>
+            </div>
+            <div class="today-extra">
+               <div class="humidity">humidity ${data.today.humidity}%</div>
+               <div class="real-feel"></div>
+               <div class="uv">${data.today.uvi}</div>
+               <div class="pressure">${data.today.pressure} mbar</div>
+               <div class="precipitation">${data.today.precipitation}%</div>
+            </div>
+            <div class="wind">
+               <div class="wind-speed">${data.today.wind_speed} km/h</div>
+               <div class="wind-direction">${data.today.wind_deg}</div>
             </div>
          </div>
       `;
 
       data.daily.forEach((day) => {
          const dayView = document.createElement('div');
-         dayView.classList.add('day-view');
+         dayView.classList.add('forecast-day');
          dayView.innerHTML = `
             <img
+               class="day-icon"
                src="https://openweathermap.org/img/wn/${day.icon}.png"
                alt=""
                srcset=""
@@ -68,6 +71,21 @@ class AppView extends HTMLElement {
 
          this.querySelector('.days-forecast').appendChild(dayView);
       });
+
+      this.updateTimeDate();
+   }
+
+   updateTimeDate() {
+      const dateInfo = new Date();
+
+      const time = format(dateInfo, 'hh:mm aa');
+      const date = format(dateInfo, 'eeee, dd MMM yyyy');
+
+      const timeDateWrapper = this.querySelector('.time-date-info');
+      timeDateWrapper.innerHTML = `<div class="time">${time}</div>
+         <div class="date">${date}</div>`;
+
+      setTimeout(this.updateTimeDate.bind(this), 6000);
    }
 }
 

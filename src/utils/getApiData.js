@@ -31,8 +31,8 @@ function processFetchedData(weatherData, cityData) {
    const processedData = {
       location: { name: cityData.name, country: cityData.country },
       current: {
-         temp: weatherData.current.temp,
-         feels_like: weatherData.current.feels_like,
+         temp: Math.round(weatherData.current.temp),
+         feels_like: Math.round(weatherData.current.feels_like),
          humidity: weatherData.current.humidity,
       },
 
@@ -57,8 +57,8 @@ function processFetchedData(weatherData, cityData) {
          icon: weatherData.daily[i].weather[0].icon,
          main: weatherData.daily[i].weather[0].main,
          temp: {
-            max: weatherData.daily[i].temp.max,
-            min: weatherData.daily[i].temp.min,
+            max: Math.round(weatherData.daily[i].temp.max),
+            min: Math.round(weatherData.daily[i].temp.min),
          },
       };
 

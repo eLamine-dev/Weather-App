@@ -14,7 +14,4 @@ async function start() {
 
    const appView = new AppView(data);
    document.body.appendChild(appView);
-   // console.log(cordinates);
-
-   // console.log(promise);
 }
