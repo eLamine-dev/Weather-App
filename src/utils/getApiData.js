@@ -1,15 +1,15 @@
 import { format, fromUnixTime, isToday, isTomorrow } from 'date-fns';
 
-export default async function fetchweatherData(location) {
-   const cityData = await getLocationCoordinates(location);
-   const weatherData = await getApiWeatherData(cityData);
+export default async function getWeatherData(location) {
+   const cityData = await fetchLocationCoordinates(location);
+   const weatherData = await fetchApiWeatherData(cityData);
 
    const processedData = processFetchedData(weatherData, cityData);
 
    return processedData;
 }
 
-async function getLocationCoordinates(location) {
+async function fetchLocationCoordinates(location) {
    const response = await fetch(
       `https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=163a88340501cc3338e7b7a9919e470f`
    );
@@ -18,19 +18,7 @@ async function getLocationCoordinates(location) {
    return coordinatesJson[0];
 }
 
-// async function getYesterdayWeatherData(coordinates) {
-//    const yesterday = new Date().setDate(new Date().getDate() - 1);
-//    const formattedYesterday = format(yesterday, 'yyyy-MM-dd');
-
-//    const weatherData = await fetch(
-//       `https://api.openweathermap.org/data/3.0/onecall/day_summary?lat=${coordinates.lat}&lon=${coordinates.lon}&date=${formattedYesterday}&units=metric&appid=163a88340501cc3338e7b7a9919e470f`
-//    );
-
-//    const weatherDataJson = await weatherData.json();
-//    return weatherDataJson;
-// }
-
-async function getApiWeatherData(cityData) {
+async function fetchApiWeatherData(cityData) {
    const response = await fetch(
       `https://api.openweathermap.org/data/3.0/onecall?lat=${cityData.lat}&lon=${cityData.lon}&units=metric&appid=163a88340501cc3338e7b7a9919e470f`
    );
@@ -52,11 +40,12 @@ function processFetchedData(weatherData, cityData) {
          humidity: weatherData.daily[0].humidity,
          wind_speed: weatherData.daily[0].wind_speed,
          wind_deg: weatherData.daily[0].wind_deg,
-         sunrise: fromUnixTime(weatherData.daily[0].sunrise),
-         sunset: fromUnixTime(weatherData.daily[0].sunset),
+         sunrise: format(fromUnixTime(weatherData.daily[0].sunrise), 'kk:mm'),
+         sunset: format(fromUnixTime(weatherData.daily[0].sunset), 'kk:mm'),
          pressure: weatherData.daily[0].pressure,
          uvi: weatherData.daily[0].uvi,
          precipitation: weatherData.daily[0].pop * 100,
+         summary: weatherData.daily[0].summary,
       },
 
       daily: [],
@@ -74,11 +63,11 @@ function processFetchedData(weatherData, cityData) {
       };
 
       if (isToday(day)) {
-         dayData.day = 'Today';
+         dayData.name = 'Today';
       } else if (isTomorrow(day)) {
-         dayData.day = 'Tomorrow';
+         dayData.name = 'Tomorrow';
       } else {
-         dayData.day = format(day, 'EEEE');
+         dayData.name = format(day, 'EEEE');
       }
       processedData.daily.push(dayData);
    }
