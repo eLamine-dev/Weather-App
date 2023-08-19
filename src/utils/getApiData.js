@@ -46,6 +46,7 @@ function processFetchedData(weatherData, cityData) {
          uvi: weatherData.daily[0].uvi,
          precipitation: weatherData.daily[0].pop * 100,
          summary: weatherData.daily[0].summary,
+         feels_like: Math.round(weatherData.daily[0].feels_like.day),
       },
 
       daily: [],

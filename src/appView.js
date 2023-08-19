@@ -18,9 +18,12 @@ class AppView extends HTMLElement {
          <div class="main-section">
             <div class="logo">Weather</div>
             <div class="time-date-info"></div>
-
             <form class="search-bar">
-               <input type="text" class="textbox" placeholder="Search City..." />
+               <input
+                  type="text"
+                  class="search-input"
+                  placeholder="Search City..."
+               />
                <button type="submit"><i class="fas fa-search"></i></button>
             </form>
             <div class="weather-now">
@@ -36,19 +39,42 @@ class AppView extends HTMLElement {
          <div class="side-info">
             <div class="days-forecast"></div>
             <div class="sun-times">
-               <div class="sunrise">Sunrise ${data.today.sunrise}</div>
-               <div class="sunset">sunset ${data.today.sunset}</div>
+               <div class="sunrise">
+                  <div class="title">Sunrise</div>
+                  <div class="value">${data.today.sunrise}</div>
+               </div>
+               <div class="sunset">
+                  <div class="title">Sunset</div>
+                  <div class="value">${data.today.sunset}</div>
+               
+               </div>
             </div>
-            <div class="today-extra">
-               <div class="humidity">humidity ${data.today.humidity}%</div>
-               <div class="real-feel"></div>
-               <div class="uv">${data.today.uvi}</div>
-               <div class="pressure">${data.today.pressure} mbar</div>
-               <div class="precipitation">${data.today.precipitation}%</div>
-            </div>
-            <div class="wind">
-               <div class="wind-speed">${data.today.wind_speed} km/h</div>
-               <div class="wind-direction">${data.today.wind_deg}</div>
+            <div class="extra-data">
+               <div class="extra-data-item humidity">
+                  <div class="title">Humidity</div>
+
+                  <div class="value">${data.today.humidity}%</div>
+               </div>
+               <div class="extra-data-item real-feel">
+                  <div class="title">Real Feel</div>
+                  <div class="value">${data.today.feels_like}°C</div>
+               </div>
+               <div class="extra-data-item uv">
+                  <div class="title">UV Index</div>
+                  <div class="value">${data.today.uvi}</div>
+               </div>
+               <div class="extra-data-item pressure">
+                  <div class="title">Pressure</div>
+                  <div class="value">${data.today.pressure} mbar</div>
+               </div>
+               <div class="extra-data-item precipitation">
+                  <div class="title">Precipitation</div>
+                  <div class="value">${data.today.precipitation}%</div>
+               </div>
+               <div class="wind">
+                  <div class="wind-speed">${data.today.wind_speed} km/h</div>
+                  <div class="wind-direction">${data.today.wind_deg}</div>
+               </div>
             </div>
          </div>
       `;

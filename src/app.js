@@ -4,14 +4,24 @@ import AppView from './appView';
 import fetchApiData from './utils/getApiData';
 
 document.addEventListener('DOMContentLoaded', () => {
-   start();
+   displayApp('London');
 });
 
-async function start() {
-   // const promise = await Promise.resolve('async working');
+function addEventListeners() {
+   document.querySelector('form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const searchValue = document.querySelector('.search-input').value;
 
-   const data = await fetchApiData('ferdjioua');
+      displayApp(searchValue);
+   });
+}
 
+async function displayApp(location) {
+   const data = await fetchApiData(location);
    const appView = new AppView(data);
+   if (document.querySelector('app-view')) {
+      document.querySelector('app-view').remove();
+   }
    document.body.appendChild(appView);
+   addEventListeners();
 }
