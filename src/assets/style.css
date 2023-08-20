@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&family=Righteous&display=swap');
 
+:root {
+   --white: #eff6ff;
+}
+
 body {
    height: 100vh;
    width: 100vw;
@@ -7,20 +11,42 @@ body {
    align-items: center;
    justify-content: center;
    font-family: 'Outfit', sans-serif;
+   background-color: rgb(51, 0, 255);
 }
 
 app-view {
-   border: 2px black solid;
+   border: 0.4rem solid var(--white);
+   border-radius: 1rem;
    height: 80vh;
    width: 80vw;
    display: grid;
-   grid-template-columns: 1fr auto;
+   grid-template-columns: 1fr 280px;
 }
 
 .main-section {
+   padding: 1rem;
    display: grid;
-   grid-template-columns: 1fr 1fr 1fr;
+
    grid-template-rows: auto 1fr;
+}
+
+.main-section-header {
+   /* display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); */
+   display: flex;
+   justify-content: space-between;
+   row-gap: 1rem;
+   column-gap: 3rem;
+   flex-wrap: wrap;
+   white-space: nowrap;
+   align-items: center;
+}
+
+.time-date-info {
+   display: flex;
+   flex-direction: column;
+   align-items: end;
+   gap: 0.5rem;
 }
 
 .weather-now {
@@ -29,11 +55,14 @@ app-view {
 }
 
 .side-info {
-   width: 300px;
+   padding: 1rem;
+
    display: flex;
+   gap: 1rem;
    /* background-color: blue; */
    flex-direction: column;
    justify-content: space-between;
+   overflow-y: scroll;
 }
 
 .forecast-day {
@@ -45,33 +74,35 @@ app-view {
    filter: brightness(2) saturate(2);
 }
 
-.extra-data-item {
+.extra-data-item,
+.sunset,
+.sunrise,
+.wind {
    display: flex;
+   justify-content: center;
 }
 
 .search-bar {
    outline: 0;
    display: flex;
-   justify-self: end;
-   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-      0 1px 2px rgba(0, 0, 0, 0.24);
-   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-   -webkit-border-radius: 4px;
-   border-radius: 4px;
+   /* justify-self: end; */
+   -webkit-border-radius: 1rem;
+   border-radius: 1rem;
+   opacity: 0.7;
+   justify-content: space-between;
 }
 
 .search-bar > .search-input {
    outline: 0;
-   height: 42px;
-   width: 244px;
+   height: 2rem;
    line-height: 42px;
-   padding: 0 16px;
-   background-color: rgba(255, 255, 255, 0.8);
+   padding: 0 10px;
+   background-color: var(--white);
    color: #212121;
    border: 0;
 
    -webkit-border-radius: 4px 0 0 4px;
-   border-radius: 4px 0 0 4px;
+   border-radius: 1rem 0 0 1rem;
 }
 
 .search-bar > .search-input:focus {
@@ -82,22 +113,20 @@ app-view {
 .search-bar > button {
    outline: 0;
    background: none;
-   background-color: rgba(38, 50, 56, 0.8);
-
-   height: 42px;
-   width: 42px;
+   background-color: var(--white);
+   height: 2rem;
+   width: 2rem;
    text-align: center;
    line-height: 42px;
    border: 0;
-   color: #fff;
+   color: black;
    font: normal normal normal 14px/1 FontAwesome;
    font-size: 16px;
    text-rendering: auto;
-   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
    -webkit-transition: background-color 0.4s ease;
    transition: background-color 0.4s ease;
-   -webkit-border-radius: 0 4px 4px 0;
-   border-radius: 0 4px 4px 0;
+   -webkit-border-radius: 0 1rem 1rem 0;
+   border-radius: 0 1rem 1rem 0;
 }
 
 .search-bar > button:hover {
@@ -112,16 +141,16 @@ app-view {
 .dt-w-e::before {
    content: 'W';
    position: absolute;
-   color: #e2dcc2;
-   font-size: 1.6em;
-   left: 5px;
+   color: var(--white);
+   font-size: 0.6em;
+   left: 2px;
 }
 .dt-w-e::after {
    content: 'E';
    position: absolute;
-   color: #e2dcc2;
-   font-size: 1.6em;
-   right: 5px;
+   color: var(--white);
+   font-size: 0.6em;
+   right: 2px;
 }
 .dt-n-s {
    display: flex;
@@ -131,21 +160,21 @@ app-view {
 .dt-n-s::before {
    content: 'N';
    position: absolute;
-   color: #e2dcc2;
-   font-size: 1.6em;
-   top: 5px;
+   color: var(--white);
+   font-size: 0.6em;
+   top: 2px;
 }
 .dt-n-s::after {
    content: 'S';
    position: absolute;
-   color: #e2dcc2;
-   font-size: 1.6em;
-   bottom: 0;
+   color: var(--white);
+   font-size: 0.6em;
+   bottom: 2px;
 }
 .arrows {
    position: absolute;
-   width: 25px;
-   height: 25px;
+   width: 5px;
+   height: 5px;
    border-radius: 50%;
    display: flex;
    justify-content: center;
@@ -153,7 +182,6 @@ app-view {
    -webkit-animation: arrows 2s ease infinite alternate;
    animation: arrows 2s ease infinite alternate;
    transform-origin: center;
-   /* transform: rotate(350deg); */
 }
 .arrows::before,
 .arrows::after {
@@ -163,34 +191,28 @@ app-view {
    height: 0;
 }
 .arrows::before {
-   bottom: 65px;
-   border-left: 14px solid transparent;
-   border-right: 14px solid transparent;
-   border-bottom: 35px solid #e2dcc2;
+   bottom: 14px;
+   border-left: 5px solid transparent;
+   border-right: 5px solid transparent;
+   border-bottom: 10px solid var(--white);
 }
 .arrows::after {
-   top: -40px;
-   border-left: 6px solid #e2dcc2;
-   border-right: 6px solid #e2dcc2;
+   top: -10px;
+   border-left: 1px solid var(--white);
+   border-right: 1px solid var(--white);
 
-   border-top: 130px solid #e2dcc2;
+   border-top: 30px solid var(--white);
 }
 .compass {
    position: relative;
    display: flex;
    justify-content: center;
    align-items: center;
-   width: 250px;
-   height: 250px;
+   width: 50px;
+   height: 50px;
    border-radius: 50%;
-   border: 10px solid #e2dcc2;
-   transform: scale(0.4);
-}
-
-#chart-container {
-   float: left;
-   width: 100%;
-   overflow: scroll;
+   border: 3px solid var(--white);
+   transform: scale(1.1);
 }
 
 #hourly-temp-chart {

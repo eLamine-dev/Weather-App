@@ -15,16 +15,11 @@ class AppView extends HTMLElement {
    render(data) {
       this.innerHTML = `
          <div class="main-section">
-            <div class="logo">Weather</div>
-            <div class="time-date-info"></div>
-            <form class="search-bar">
-               <input
-                  type="text"
-                  class="search-input"
-                  placeholder="Search City..."
-               />
-               <button type="submit"><i class="fas fa-search"></i></button>
-            </form>
+            <div class="main-section-header">
+               <div class="logo">Weather</div>
+               <div class="time-date-info"></div>
+            </div>
+
             <div class="weather-now">
                <div class="location">
                   Today in ${data.location.name}, ${data.location.country}
@@ -36,6 +31,14 @@ class AppView extends HTMLElement {
             </div>
          </div>
          <div class="side-info">
+            <form class="search-bar">
+               <input
+                  type="text"
+                  class="search-input"
+                  placeholder="Search City..."
+               />
+               <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
             <div class="days-forecast"></div>
             <div class="sun-times">
                <div class="sunrise">
@@ -69,10 +72,10 @@ class AppView extends HTMLElement {
                   <div class="title">Precipitation</div>
                   <div class="value">${data.today.precipitation}%</div>
                </div>
-               <div class="wind">
-                  <div class="wind-speed">${data.today.wind_speed} km/h</div>
-                  <div class="wind-direction">${data.today.wind_deg}</div>
-
+            </div>
+            <div class="wind">
+               <div class="wind-speed">${data.today.wind_speed} km/h</div>
+               <div class="wind-direction">
                   <div class="compass">
                      <div class="arrows"></div>
                      <div class="dt-n-s"></div>
@@ -80,12 +83,7 @@ class AppView extends HTMLElement {
                   </div>
                </div>
             </div>
-            <div
-               id="chart-container"
-               
-            >
-         
-            </div>
+            <div id="chart-container"></div>
          </div>
       `;
 
