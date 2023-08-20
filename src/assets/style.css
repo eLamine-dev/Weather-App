@@ -187,6 +187,11 @@ app-view {
    transform: scale(0.4);
 }
 
+#chart-container {
+   float: left;
+   width: 100%;
+   overflow: scroll;
+}
+
 #hourly-temp-chart {
-   width: 900px;
 }
