@@ -1,9 +1,10 @@
-import { format } from 'date-fns';
+const { zonedTimeToUtc, utcToZonedTime, format } = require('date-fns-tz');
 
 class AppView extends HTMLElement {
    constructor(data) {
       super();
       this.data = data;
+      console.log(data);
 
       this.render(this.data);
    }
@@ -24,16 +25,16 @@ class AppView extends HTMLElement {
                <div class="location">
                   Today in ${data.location.name}, ${data.location.country}
                </div>
-               <div class="wether-summary">${data.today.summary}</div>
-               <div>
-                  <div class="temperature">${data.current.temp}°C</div>
-                  <div class="real-feel">
-                     <i class="fa-solid fa-person"></i>
-                     <div>${data.current.feels_like}°C</div>
-                  </div>
-                  <div class="humidity">
+               <div class="weather-summary">${data.today.summary}</div>
+               <div class="current-data">
+                  <div class="current-temp">${data.current.temp}°</div>
+                  <div class="current-humidity">
                      <i class="fa-solid fa-droplet"></i>
                      <div>${data.current.humidity}%</div>
+                  </div>
+                  <div class="current-real-feel">
+                     <i class="fa-solid fa-person"></i>
+                     <div>${data.current.feels_like}°</div>
                   </div>
                </div>
             </div>
@@ -75,17 +76,23 @@ class AppView extends HTMLElement {
                <div class="sun-times">
                   <div class="sunrise">
                      <div class="title">Sunrise</div>
-                     <div class="value">${data.today.sunrise}</div>
+                     <div class="value">
+                        ${format(this.fixTimeZone(data.today.sunrise), 'kk:mm')}
+                     </div>
                   </div>
                   <div class="sunset">
                      <div class="title">Sunset</div>
-                     <div class="value">${data.today.sunset}</div>
+                     <div class="value">
+                        ${format(this.fixTimeZone(data.today.sunset), 'kk:mm')}
+                     </div>
                   </div>
                </div>
                <div class="wind">
-               <div class="text"><div class="title">Wind</div>
-               <div class="wind-speed">${data.today.wind_speed}km/h</div> </div>
-                  
+                  <div class="text">
+                     <div class="title">Wind</div>
+                     <div class="wind-speed">${data.today.wind_speed}km/h</div>
+                  </div>
+
                   <div class="wind-direction">
                      <div class="compass">
                         <div class="arrows"></div>
@@ -93,7 +100,6 @@ class AppView extends HTMLElement {
                         <div class="dt-w-e"></div>
                      </div>
                   </div>
-                  
                </div>
             </div>
 
@@ -130,11 +136,20 @@ class AppView extends HTMLElement {
       ).style.transform = `rotate(${data.today.wind_deg}deg)`;
    }
 
-   updateTimeDate() {
-      const dateInfo = new Date();
+   fixTimeZone(date) {
+      const timeZone = this.data.location.timezone;
+      const zonedDate = utcToZonedTime(date, timeZone);
+      return zonedDate;
+   }
 
-      const time = format(dateInfo, 'hh:mm aa');
-      const date = format(dateInfo, 'eeee, dd MMM yyyy');
+   updateTimeDate() {
+      const zonedDate = this.fixTimeZone(new Date());
+      const time = format(zonedDate, 'hh:mm aa', {
+         timeZone: this.data.location.timezone,
+      });
+      const date = format(zonedDate, 'eeee, dd MMM yyyy', {
+         timeZone: this.data.location.timezone,
+      });
 
       const timeDateWrapper = this.querySelector('.time-date-info');
       timeDateWrapper.innerHTML = `<div class="time">${time}</div>

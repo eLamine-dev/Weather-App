@@ -24,7 +24,7 @@ app-view {
    border: 0.4rem solid var(--white);
    border-radius: 1rem;
    height: 80vh;
-   width: 80vw;
+   width: 75vw;
    display: grid;
    grid-template-columns: 1fr 400px;
    color: var(--white);
@@ -33,6 +33,7 @@ app-view {
 .main-section {
    padding: 1rem;
    display: grid;
+   padding-bottom: 3rem;
 
    grid-template-rows: auto 1fr;
 }
@@ -56,10 +57,39 @@ app-view {
    flex-grow: 1;
 }
 
+.time {
+   font-size: 2rem;
+}
+
 .weather-now {
    display: flex;
    justify-content: flex-end;
    flex-direction: column;
+   max-width: 450px;
+   gap: 1rem;
+}
+
+.current-temp {
+   font-size: 7rem;
+   grid-row: 1/3;
+}
+
+.weather-summary {
+   font-size: 2rem;
+}
+
+.current-data {
+   display: grid;
+   grid-template-columns: auto auto;
+   grid-template-columns: auto auto;
+   gap: 0.5rem;
+   align-items: center;
+}
+
+.current-real-feel,
+.current-humidity {
+   display: flex;
+   gap: 1rem;
 }
 
 .side-info {
@@ -130,7 +160,6 @@ app-view {
 .search-bar {
    outline: 0;
    display: flex;
-   /* justify-self: end; */
    -webkit-border-radius: 1rem;
    border-radius: 1rem;
    opacity: 0.7;

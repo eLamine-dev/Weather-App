@@ -29,7 +29,11 @@ async function fetchApiWeatherData(cityData) {
 
 function processFetchedData(weatherData, cityData) {
    const processedData = {
-      location: { name: cityData.name, country: cityData.country },
+      location: {
+         name: cityData.name,
+         country: cityData.country,
+         timezone: weatherData.timezone,
+      },
       current: {
          temp: Math.round(weatherData.current.temp),
          feels_like: Math.round(weatherData.current.feels_like),
@@ -40,8 +44,8 @@ function processFetchedData(weatherData, cityData) {
          humidity: weatherData.daily[0].humidity,
          wind_speed: weatherData.daily[0].wind_speed,
          wind_deg: weatherData.daily[0].wind_deg,
-         sunrise: format(fromUnixTime(weatherData.daily[0].sunrise), 'kk:mm'),
-         sunset: format(fromUnixTime(weatherData.daily[0].sunset), 'kk:mm'),
+         sunrise: fromUnixTime(weatherData.daily[0].sunrise),
+         sunset: fromUnixTime(weatherData.daily[0].sunset),
          pressure: weatherData.daily[0].pressure,
          uvi: weatherData.daily[0].uvi,
          precipitation: weatherData.daily[0].pop * 100,
@@ -83,11 +87,6 @@ function processFetchedData(weatherData, cityData) {
          Math.round(weatherData.hourly[i].temp)
       );
    }
-
-   // weatherData.hourly.forEach((hour) => {
-   //    processedData.hourly.hours.push(format(fromUnixTime(hour.dt), 'kk:mm'));
-   //    processedData.hourly.temperatures.push(Math.round(hour.temp));
-   // });
 
    return processedData;
 }
