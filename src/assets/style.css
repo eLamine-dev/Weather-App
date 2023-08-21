@@ -2,7 +2,8 @@
 
 :root {
    --white: #eff6ff;
-   --transparent-white: #eff6ff2b;
+   --transparent-white: #bae5fd20;
+   --gray-text: #bae6fd;
 }
 
 body {
@@ -94,11 +95,12 @@ app-view {
 
 .side-info {
    padding: 1rem;
-   background-color: var(--transparent-white);
+   /* background-color: var(--transparent-white); */
    display: flex;
    gap: 0.5rem;
    flex-direction: column;
-   justify-content: space-between;
+   justify-content: stretch;
+
    overflow-y: scroll;
    -ms-overflow-style: none;
    scrollbar-width: none;
@@ -108,6 +110,19 @@ app-view {
    display: none;
 }
 
+.title {
+   display: flex;
+   gap: 0.4rem;
+   color: var(--gray-text);
+   font-size: 0.9rem;
+   align-items: center;
+   font-weight: 400;
+}
+
+.days-forecast {
+   flex: 1;
+}
+
 .days-forecast,
 .sun-times,
 .wind,
@@ -115,23 +130,31 @@ app-view {
 #chart-container {
    display: flex;
    flex-direction: column;
-   gap: 0.5rem;
    background-color: var(--transparent-white);
    border-radius: 0.6rem;
-   padding: 0.5rem;
+   padding: 0.4rem;
+   justify-content: space-between;
+}
+
+#chart-container {
+   gap: 0.5rem;
+   justify-content: space-between;
+   align-items: flex-start;
 }
 
 .wind {
    flex-direction: row;
    align-items: center;
    justify-content: space-around;
+   gap: 1rem;
 }
 
 .extra-container {
    display: grid;
+   grid-template-rows: 1fr 1fr;
    grid-template-columns: 1fr auto;
-   grid-template-columns: auto auto;
    gap: 0.5rem;
+   flex: 0.4;
 }
 
 .extra-data {
@@ -142,7 +165,16 @@ app-view {
    display: grid;
    grid-template-columns: auto auto 1fr auto;
    align-items: center;
+   align-content: center;
    gap: 0.5rem;
+
+   flex: 1;
+}
+
+.forecast-day:not(:last-child),
+.extra-data-item:not(:last-child),
+.sunrise {
+   border-bottom: var(--transparent-white) solid 1px;
 }
 
 .day-icon {
@@ -155,6 +187,8 @@ app-view {
 .sunrise {
    display: flex;
    justify-content: space-between;
+   flex: 1;
+   align-items: center;
 }
 
 .search-bar {
@@ -285,6 +319,6 @@ app-view {
    width: 50px;
    height: 50px;
    border-radius: 50%;
-   border: 3px solid var(--white);
+   border: 3px solid var(--transparent-white);
    transform: scale(1.1);
 }

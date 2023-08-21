@@ -79,10 +79,15 @@ function processFetchedData(weatherData, cityData) {
       processedData.daily.push(dayData);
    }
 
-   for (let i = 0; i < 24; i += 3) {
-      processedData.hourly.hours.push(
-         format(fromUnixTime(weatherData.hourly[i].dt), 'kk:mm')
-      );
+   for (let i = 0; i <= 24; i += 3) {
+      if (i === 0) {
+         processedData.hourly.hours.push('Now');
+      } else {
+         processedData.hourly.hours.push(
+            format(fromUnixTime(weatherData.hourly[i].dt), 'kk:mm')
+         );
+      }
+
       processedData.hourly.temperatures.push(
          Math.round(weatherData.hourly[i].temp)
       );

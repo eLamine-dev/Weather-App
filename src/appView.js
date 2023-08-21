@@ -1,11 +1,9 @@
-const { zonedTimeToUtc, utcToZonedTime, format } = require('date-fns-tz');
+const { utcToZonedTime, format } = require('date-fns-tz');
 
 class AppView extends HTMLElement {
    constructor(data) {
       super();
       this.data = data;
-      console.log(data);
-
       this.render(this.data);
    }
 
@@ -48,7 +46,11 @@ class AppView extends HTMLElement {
                />
                <button type="submit"><i class="fas fa-search"></i></button>
             </form>
-            <div class="days-forecast"></div>
+            <div class="days-forecast">
+               <div class="title">
+                  <i class="fa-solid fa-calendar-week"></i> 7 days forecast
+               </div>
+            </div>
             <div class="extra-container">
                <div class="extra-data">
                   <div class="extra-data-item humidity">
@@ -104,7 +106,9 @@ class AppView extends HTMLElement {
             </div>
 
             <div id="chart-container">
-               <div class="title">Next 24h</div>
+               <div class="title">
+                  <i class="fa-solid fa-clock"></i> 24-hour forecast
+               </div>
             </div>
          </div>
       `;
@@ -169,20 +173,40 @@ class AppView extends HTMLElement {
                   fill: false,
                   lineTension: 0,
                   backgroundColor: 'white',
-                  borderColor: 'rgba(0,0,255,0.1)',
+                  borderColor: '#bae5fd20',
+
                   data: this.data.hourly.temperatures,
                },
             ],
          },
          options: {
             legend: { display: false },
+
             scales: {
                yAxes: [
                   {
                      display: false,
+                     gridLines: {
+                        borderColor: '#bae5fd20',
+                     },
+
                      ticks: {
                         min: Math.min(...this.data.hourly.temperatures) - 7,
                         max: Math.max(...this.data.hourly.temperatures) + 7,
+                     },
+                  },
+               ],
+               xAxes: [
+                  {
+                     ticks: {
+                        fontColor: 'white',
+                     },
+                     gridLines: {
+                        drawBorder: false,
+                        display: true,
+                        color: '#bae5fd20',
+                        padding: 20,
+                        borderColor: '#bae5fd20',
                      },
                   },
                ],
