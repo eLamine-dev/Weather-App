@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&family=Righteous&display=swap');
 
 :root {
-   --white: #eff6ff;
-   --transparent-white: #bae5fd20;
+   --white: #f0f9ff;
+   --less-transparent: #bae5fd52;
+   --transparent-white: #bae5fd33;
    --gray-text: #bae6fd;
 }
 
@@ -13,8 +14,8 @@ body {
    align-items: center;
    justify-content: center;
    font-family: 'Outfit', sans-serif;
-   /* background-color: rgb(51, 0, 255); */
-   background: url('./images/drizzle.jpg') no-repeat center center fixed;
+
+   background: url('./images/few\ clouds.jpg') no-repeat center center fixed;
    -webkit-background-size: cover;
    -moz-background-size: cover;
    -o-background-size: cover;
@@ -22,7 +23,7 @@ body {
 }
 
 app-view {
-   border: 0.4rem solid var(--white);
+   border: 0.3rem solid var(--white);
    border-radius: 1rem;
    height: 80vh;
    width: 75vw;
@@ -34,9 +35,16 @@ app-view {
 .main-section {
    padding: 1rem;
    display: grid;
-   padding-bottom: 3rem;
-
+   padding-bottom: 2rem;
    grid-template-rows: auto auto 1fr;
+   gap: 1rem;
+}
+
+.logo a {
+   font-size: 1.4rem;
+   color: var(--gray-text);
+   font-weight: 500;
+   text-decoration: none;
 }
 
 .main-section-header {
@@ -71,25 +79,25 @@ app-view {
 
 .current-temp {
    font-size: 7rem;
+
    grid-row: 1/-1;
-   justify-self: center;
+   justify-self: start;
    align-self: center;
 }
 
-.current-icon {
-   width: 2rem;
-}
-
 .weather-summary {
-   font-size: 2rem;
+   font-size: 1.6rem;
+   line-height: 2rem;
+   font-weight: 500;
 }
 
 .current-data {
    display: grid;
-   grid-template-columns: auto auto;
-   grid-template-rows: 1fr 1fr 1fr;
+   grid-template-columns: 3fr 2fr;
+   grid-template-rows: 2rem 2rem 2rem;
    gap: 0.5rem;
-   align-items: center;
+   align-items: stretch;
+   justify-content: start;
 }
 
 .current-data i {
@@ -189,7 +197,8 @@ app-view {
    border-bottom: var(--transparent-white) solid 1px;
 }
 
-.day-icon {
+.day-icon,
+.current-icon {
    height: 2rem;
    filter: brightness(2) saturate(2);
 }
@@ -208,49 +217,55 @@ app-view {
    display: flex;
    -webkit-border-radius: 1rem;
    border-radius: 1rem;
-   opacity: 0.7;
    justify-content: center;
 }
 
 .search-bar > .search-input {
+   font-size: 1rem;
    outline: 0;
    height: 2rem;
-   line-height: 42px;
-   padding: 0 10px;
-   background-color: var(--white);
-   color: #212121;
+   width: 9rem;
+   line-height: 1rem;
+   padding: 0 1rem;
+   background-color: var(--less-transparent);
+   color: var(--white);
    border: 0;
-
-   -webkit-border-radius: 4px 0 0 4px;
+   -webkit-border-radius: 1rem 0 0 1rem;
    border-radius: 1rem 0 0 1rem;
+   font-family: 'Outfit', sans-serif;
 }
 
 .search-bar > .search-input:focus {
    outline: 0;
-   background-color: #fff;
+}
+.search-bar > .search-input::placeholder {
+   color: var(--white);
+   font-size: 1rem;
+   font-family: 'Outfit', sans-serif;
 }
 
 .search-bar > button {
    outline: 0;
    background: none;
-   background-color: var(--white);
+   background-color: var(--less-transparent);
    height: 2rem;
-   width: 2rem;
+   width: 3rem;
    text-align: center;
-   line-height: 42px;
+   line-height: 2rem;
    border: 0;
-   color: black;
-   font: normal normal normal 14px/1 FontAwesome;
-   font-size: 16px;
+   color: var(--white);
+   font: normal normal normal 1rem/1 FontAwesome;
+   font-size: 1rem;
    text-rendering: auto;
    -webkit-transition: background-color 0.4s ease;
    transition: background-color 0.4s ease;
    -webkit-border-radius: 0 1rem 1rem 0;
    border-radius: 0 1rem 1rem 0;
+   cursor: pointer;
 }
 
 .search-bar > button:hover {
-   background-color: rgba(0, 150, 136, 0.8);
+   background-color: var(--gray-text);
 }
 
 .dt-w-e {
@@ -320,7 +335,6 @@ app-view {
    top: -10px;
    border-left: 1px solid var(--white);
    border-right: 1px solid var(--white);
-
    border-top: 30px solid var(--white);
 }
 .compass {
@@ -328,9 +342,8 @@ app-view {
    display: flex;
    justify-content: center;
    align-items: center;
-   width: 50px;
-   height: 50px;
+   width: 3.8rem;
+   height: 3.8rem;
    border-radius: 50%;
-   border: 3px solid var(--transparent-white);
-   transform: scale(1.1);
+   border: 3px solid var(--less-transparent);
 }

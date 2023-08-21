@@ -1,9 +1,11 @@
 const { utcToZonedTime, format } = require('date-fns-tz');
+import fixTimeZone from './utils/fixTimeZone';
 
 class AppView extends HTMLElement {
    constructor(data) {
       super();
       this.data = data;
+      console.log(data);
       this.render(this.data);
    }
 
@@ -15,7 +17,11 @@ class AppView extends HTMLElement {
       this.innerHTML = `
          <div class="main-section">
             <div class="main-section-header">
-               <div class="logo">Weather</div>
+               <div class="logo">
+                  <a href="http://https://github.com/eLamine-dev/Weather-App"
+                     >TopWeather.</a
+                  >
+               </div>
                <form class="search-bar">
                   <input
                      type="text"
@@ -34,13 +40,13 @@ class AppView extends HTMLElement {
                <div class="weather-summary">${data.today.summary}</div>
                <div class="current-data">
                   <div class="current-temp">${data.current.temp}°</div>
-                  
+
                   <div class="current-humidity">
                      <i class="fa-solid fa-droplet"></i>
                      <div>${data.current.humidity}%</div>
                   </div>
                   <div class="current-real-feel">
-                  <i class="fa-solid fa-person"></i>
+                     <i class="fa-solid fa-person"></i>
                      <div>${data.current.feels_like}°</div>
                   </div>
                   <div class="current-weather-description">
@@ -52,7 +58,7 @@ class AppView extends HTMLElement {
                         alt=""
                         srcset=""
                      />
-                     <div>${data.current.description}</div>
+                     <div>${data.current.main}</div>
                   </div>
                </div>
             </div>
@@ -91,13 +97,13 @@ class AppView extends HTMLElement {
                   <div class="sunrise">
                      <div class="title">Sunrise</div>
                      <div class="value">
-                        ${format(this.fixTimeZone(data.today.sunrise), 'kk:mm')}
+                        ${format(data.today.sunrise, 'kk:mm')}
                      </div>
                   </div>
                   <div class="sunset">
                      <div class="title">Sunset</div>
                      <div class="value">
-                        ${format(this.fixTimeZone(data.today.sunset), 'kk:mm')}
+                        ${format(data.today.sunset, 'kk:mm')}
                      </div>
                   </div>
                </div>
@@ -138,8 +144,6 @@ class AppView extends HTMLElement {
             <div class="day-name">${day.name}</div>
             <div class="day-weather">${day.main}</div>
             <div class="day-temp-max">${day.temp.max} / ${day.temp.min}</div>
-            
-            
          `;
 
          this.querySelector('.days-forecast').appendChild(dayView);
@@ -152,14 +156,8 @@ class AppView extends HTMLElement {
       ).style.transform = `rotate(${data.today.wind_deg}deg)`;
    }
 
-   fixTimeZone(date) {
-      const timeZone = this.data.location.timezone;
-      const zonedDate = utcToZonedTime(date, timeZone);
-      return zonedDate;
-   }
-
    updateTimeDate() {
-      const zonedDate = this.fixTimeZone(new Date());
+      const zonedDate = fixTimeZone(new Date(), this.data.location.timezone);
       const time = format(zonedDate, 'hh:mm aa', {
          timeZone: this.data.location.timezone,
       });

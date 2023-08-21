@@ -2,7 +2,7 @@ import './assets/reset.css';
 import './assets/style.css';
 import AppView from './appView';
 import fetchApiData from './utils/getApiData';
-import { fromUnixTime } from 'date-fns';
+// import './assets/images/scattered clouds.jpg';
 
 document.addEventListener('DOMContentLoaded', () => {
    displayApp('London');
@@ -23,6 +23,11 @@ async function displayApp(location) {
    if (document.querySelector('app-view')) {
       document.querySelector('app-view').remove();
    }
+
+   // document.querySelector(
+   //    'body'
+   // ).style.background = `url('${data.current.description}.jpg') no-repeat center center fixed`;
+
    document.body.appendChild(appView);
    addEventListeners();
 }

@@ -1,4 +1,13 @@
-import { format, fromUnixTime, isToday, isTomorrow } from 'date-fns';
+import {
+   isBefore,
+   isAfter,
+   format,
+   fromUnixTime,
+   isToday,
+   isTomorrow,
+} from 'date-fns';
+
+import fixTimeZone from './fixTimeZone';
 
 export default async function getWeatherData(location) {
    const cityData = await fetchLocationCoordinates(location);
@@ -39,15 +48,22 @@ function processFetchedData(weatherData, cityData) {
          feels_like: Math.round(weatherData.current.feels_like),
          humidity: weatherData.current.humidity,
          icon: weatherData.current.weather[0].icon,
-         description: weatherData.current.weather[0].main,
+         main: weatherData.current.weather[0].main,
+         description: weatherData.current.weather[0].description,
       },
 
       today: {
          humidity: weatherData.daily[0].humidity,
          wind_speed: weatherData.daily[0].wind_speed,
          wind_deg: weatherData.daily[0].wind_deg,
-         sunrise: fromUnixTime(weatherData.daily[0].sunrise),
-         sunset: fromUnixTime(weatherData.daily[0].sunset),
+         sunrise: fixTimeZone(
+            fromUnixTime(weatherData.daily[0].sunrise),
+            weatherData.timezone
+         ),
+         sunset: fixTimeZone(
+            fromUnixTime(weatherData.daily[0].sunset),
+            weatherData.timezone
+         ),
          pressure: weatherData.daily[0].pressure,
          uvi: weatherData.daily[0].uvi,
          precipitation: weatherData.daily[0].pop * 100,
@@ -59,6 +75,17 @@ function processFetchedData(weatherData, cityData) {
 
       hourly: { hours: [], temperatures: [] },
    };
+
+   const timeNow = new Date();
+
+   if (
+      timeNow.getTime() < processedData.today.sunset.getTime() &&
+      timeNow.getTime() > processedData.today.sunrise.getTime()
+   ) {
+      processedData.current.dayTime = 'day';
+   } else {
+      processedData.current.dayTime = 'night';
+   }
 
    for (let i = 0; i < 7; i++) {
       const day = fromUnixTime(weatherData.daily[i].dt);
@@ -86,7 +113,16 @@ function processFetchedData(weatherData, cityData) {
          processedData.hourly.hours.push('Now');
       } else {
          processedData.hourly.hours.push(
-            format(fromUnixTime(weatherData.hourly[i].dt), 'kk:mm')
+            format(
+               fixTimeZone(
+                  fromUnixTime(weatherData.hourly[i].dt),
+                  weatherData.timezone
+               ),
+               'kk:mm',
+               {
+                  timeZone: processedData.location.timezone,
+               }
+            )
          );
       }
 
