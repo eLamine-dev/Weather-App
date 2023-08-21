@@ -16,8 +16,16 @@ class AppView extends HTMLElement {
          <div class="main-section">
             <div class="main-section-header">
                <div class="logo">Weather</div>
-               <div class="time-date-info"></div>
+               <form class="search-bar">
+                  <input
+                     type="text"
+                     class="search-input"
+                     placeholder="Search City..."
+                  />
+                  <button type="submit"><i class="fas fa-search"></i></button>
+               </form>
             </div>
+            <div class="time-date-info"></div>
 
             <div class="weather-now">
                <div class="location">
@@ -26,26 +34,30 @@ class AppView extends HTMLElement {
                <div class="weather-summary">${data.today.summary}</div>
                <div class="current-data">
                   <div class="current-temp">${data.current.temp}°</div>
+                  
                   <div class="current-humidity">
                      <i class="fa-solid fa-droplet"></i>
                      <div>${data.current.humidity}%</div>
                   </div>
                   <div class="current-real-feel">
-                     <i class="fa-solid fa-person"></i>
+                  <i class="fa-solid fa-person"></i>
                      <div>${data.current.feels_like}°</div>
+                  </div>
+                  <div class="current-weather-description">
+                     <img
+                        class="current-icon"
+                        src="https://openweathermap.org/img/wn/${
+                           data.current.icon
+                        }.png"
+                        alt=""
+                        srcset=""
+                     />
+                     <div>${data.current.description}</div>
                   </div>
                </div>
             </div>
          </div>
          <div class="side-info">
-            <form class="search-bar">
-               <input
-                  type="text"
-                  class="search-input"
-                  placeholder="Search City..."
-               />
-               <button type="submit"><i class="fas fa-search"></i></button>
-            </form>
             <div class="days-forecast">
                <div class="title">
                   <i class="fa-solid fa-calendar-week"></i> 7 days forecast

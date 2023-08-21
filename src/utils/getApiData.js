@@ -38,6 +38,8 @@ function processFetchedData(weatherData, cityData) {
          temp: Math.round(weatherData.current.temp),
          feels_like: Math.round(weatherData.current.feels_like),
          humidity: weatherData.current.humidity,
+         icon: weatherData.current.weather[0].icon,
+         description: weatherData.current.weather[0].main,
       },
 
       today: {
