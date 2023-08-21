@@ -20,7 +20,7 @@ async function fetchLocationCoordinates(location) {
 
 async function fetchApiWeatherData(cityData) {
    const response = await fetch(
-      `https://api.openweathermap.org/data/3.0/onecall?lat=${cityData.lat}&lon=${cityData.lon}&units=metric&appid=163a88340501cc3338e7b7a9919e470f`
+      `https://api.openweathermap.org/data/3.0/onecall?lat=${cityData.lat}&lon=${cityData.lon}&units=metric&exclude=alerts,minutely&appid=163a88340501cc3338e7b7a9919e470f`
    );
 
    const weatherData = await response.json();

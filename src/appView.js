@@ -24,10 +24,18 @@ class AppView extends HTMLElement {
                <div class="location">
                   Today in ${data.location.name}, ${data.location.country}
                </div>
-               <div class="temperature">${data.current.temp}°C</div>
-               <div class="real-feel">${data.current.feels_like}°C</div>
-               <div class="humidity">${data.current.humidity}%</div>
                <div class="wether-summary">${data.today.summary}</div>
+               <div>
+                  <div class="temperature">${data.current.temp}°C</div>
+                  <div class="real-feel">
+                     <i class="fa-solid fa-person"></i>
+                     <div>${data.current.feels_like}°C</div>
+                  </div>
+                  <div class="humidity">
+                     <i class="fa-solid fa-droplet"></i>
+                     <div>${data.current.humidity}%</div>
+                  </div>
+               </div>
             </div>
          </div>
          <div class="side-info">
@@ -40,50 +48,58 @@ class AppView extends HTMLElement {
                <button type="submit"><i class="fas fa-search"></i></button>
             </form>
             <div class="days-forecast"></div>
-            <div class="sun-times">
-               <div class="sunrise">
-                  <div class="title">Sunrise</div>
-                  <div class="value">${data.today.sunrise}</div>
-               </div>
-               <div class="sunset">
-                  <div class="title">Sunset</div>
-                  <div class="value">${data.today.sunset}</div>
-               </div>
-            </div>
-            <div class="extra-data">
-               <div class="extra-data-item humidity">
-                  <div class="title">Humidity</div>
+            <div class="extra-container">
+               <div class="extra-data">
+                  <div class="extra-data-item humidity">
+                     <div class="title">Humidity</div>
 
-                  <div class="value">${data.today.humidity}%</div>
-               </div>
-               <div class="extra-data-item real-feel">
-                  <div class="title">Real Feel</div>
-                  <div class="value">${data.today.feels_like}°C</div>
-               </div>
-               <div class="extra-data-item uv">
-                  <div class="title">UV Index</div>
-                  <div class="value">${data.today.uvi}</div>
-               </div>
-               <div class="extra-data-item pressure">
-                  <div class="title">Pressure</div>
-                  <div class="value">${data.today.pressure} mbar</div>
-               </div>
-               <div class="extra-data-item precipitation">
-                  <div class="title">Precipitation</div>
-                  <div class="value">${data.today.precipitation}%</div>
-               </div>
-            </div>
-            <div class="wind">
-               <div class="wind-speed">${data.today.wind_speed} km/h</div>
-               <div class="wind-direction">
-                  <div class="compass">
-                     <div class="arrows"></div>
-                     <div class="dt-n-s"></div>
-                     <div class="dt-w-e"></div>
+                     <div class="value">${data.today.humidity}%</div>
+                  </div>
+                  <div class="extra-data-item real-feel">
+                     <div class="title">Real Feel</div>
+                     <div class="value">${data.today.feels_like}°C</div>
+                  </div>
+                  <div class="extra-data-item uv">
+                     <div class="title">UV Index</div>
+                     <div class="value">${data.today.uvi}</div>
+                  </div>
+                  <div class="extra-data-item pressure">
+                     <div class="title">Pressure</div>
+                     <div class="value">${data.today.pressure} mbar</div>
+                  </div>
+                  <div class="extra-data-item precipitation">
+                     <div class="title">Precipitation</div>
+                     <div class="value">${data.today.precipitation}%</div>
                   </div>
                </div>
+               <div class="sun-times">
+                  <div class="sunrise">
+                     <div class="title">Sunrise</div>
+                     <div class="value">${data.today.sunrise}</div>
+                  </div>
+                  <div class="sunset">
+                     <div class="title">Sunset</div>
+                     <div class="value">${data.today.sunset}</div>
+                  </div>
+               </div>
+               <div class="wind">
+               <div class="text"><div class="title">Wind</div>
+               <div class="wind-speed">${data.today.wind_speed}km/h</div> </div>
+                  
+                  <div class="wind-direction">
+                     <div class="compass">
+                        <div class="arrows"></div>
+                        <div class="dt-n-s"></div>
+                        <div class="dt-w-e"></div>
+                     </div>
+                  </div>
+                  
+               </div>
             </div>
-            <div id="chart-container"></div>
+
+            <div id="chart-container">
+               <div class="title">Next 24h</div>
+            </div>
          </div>
       `;
 
@@ -98,9 +114,10 @@ class AppView extends HTMLElement {
                srcset=""
             />
             <div class="day-name">${day.name}</div>
-            <div class="day-temp-max">${day.temp.max}</div>
-            <div>/</div>
-            <div class="day-temp-min">${day.temp.min}</div>
+            <div class="day-weather">${day.main}</div>
+            <div class="day-temp-max">${day.temp.max} / ${day.temp.min}</div>
+            
+            
          `;
 
          this.querySelector('.days-forecast').appendChild(dayView);
@@ -136,7 +153,7 @@ class AppView extends HTMLElement {
                {
                   fill: false,
                   lineTension: 0,
-                  backgroundColor: 'rgba(0,0,255,1.0)',
+                  backgroundColor: 'white',
                   borderColor: 'rgba(0,0,255,0.1)',
                   data: this.data.hourly.temperatures,
                },
