@@ -183,7 +183,7 @@ class AppView extends HTMLElement {
                   fill: false,
                   lineTension: 0,
                   backgroundColor: 'white',
-                  borderColor: '#bae5fd20',
+                  borderColor: '#bae6fd',
 
                   data: this.data.hourly.temperatures,
                },

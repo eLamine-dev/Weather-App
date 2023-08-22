@@ -2,6 +2,7 @@ import './assets/reset.css';
 import './assets/style.css';
 import AppView from './appView';
 import fetchApiData from './utils/getApiData';
+import updateBackground from './utils/updateBackground';
 // import './assets/images/scattered clouds.jpg';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -24,9 +25,7 @@ async function displayApp(location) {
       document.querySelector('app-view').remove();
    }
 
-   // document.querySelector(
-   //    'body'
-   // ).style.background = `url('${data.current.description}.jpg') no-repeat center center fixed`;
+   updateBackground(data.current);
 
    document.body.appendChild(appView);
    addEventListeners();

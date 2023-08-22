@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&family=Righteous&display=swap');
 
 :root {
-   --white: #f0f9ff;
+   --white: #f6fbff;
    --less-transparent: #bae5fd52;
    --transparent-white: #bae5fd33;
-   --gray-text: #bae6fd;
+   --gray-text: #d0efff;
 }
 
 body {
@@ -14,8 +14,6 @@ body {
    align-items: center;
    justify-content: center;
    font-family: 'Outfit', sans-serif;
-
-   background: url('./images/few\ clouds.jpg') no-repeat center center fixed;
    -webkit-background-size: cover;
    -moz-background-size: cover;
    -o-background-size: cover;
@@ -24,12 +22,13 @@ body {
 
 app-view {
    border: 0.3rem solid var(--white);
-   border-radius: 1rem;
+   border-radius: 0.7rem;
    height: 80vh;
    width: 75vw;
    display: grid;
    grid-template-columns: 1fr 400px;
    color: var(--white);
+   background-color: #00000042;
 }
 
 .main-section {
