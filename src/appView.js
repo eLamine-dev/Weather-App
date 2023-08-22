@@ -73,7 +73,7 @@ class AppView extends HTMLElement {
                   </div>
                   <div class="extra-data-item real-feel">
                      <div class="title">Real Feel</div>
-                     <div class="value">${data.today.feels_like}°C</div>
+                     <div class="value">${data.today.feels_like}°</div>
                   </div>
                   <div class="extra-data-item uv">
                      <div class="title">UV Index</div>
@@ -138,7 +138,7 @@ class AppView extends HTMLElement {
             />
             <div class="day-name">${day.name}</div>
             <div class="day-weather">${day.main}</div>
-            <div class="day-temp-max">${day.temp.max} / ${day.temp.min}</div>
+            <div class="day-temp-max">${day.temp.max}° / ${day.temp.min}°</div>
          `;
 
          this.querySelector('.days-forecast').appendChild(dayView);

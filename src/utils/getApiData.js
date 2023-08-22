@@ -1,28 +1,57 @@
 import { format, fromUnixTime, isToday, isTomorrow } from 'date-fns';
 import fixTimeZone from './fixTimeZone';
 
+const API_KEY = '163a88340501cc3338e7b7a9919e470f';
+
 export default async function getWeatherData(location) {
-   const cityData = await fetchLocationCoordinates(location);
-   const weatherData = await fetchApiWeatherData(cityData);
+   let cityData;
+   let weatherData;
 
-   const processedData = processFetchedData(weatherData, cityData);
+   try {
+      cityData = await fetchLocationCoordinates(location);
+   } catch (error) {
+      console.log(error);
+      return;
+   }
 
-   return processedData;
+   try {
+      weatherData = await fetchApiWeatherData(cityData);
+      const processedData = processFetchedData(weatherData, cityData);
+
+      return processedData;
+   } catch (error) {
+      console.log(error);
+   }
 }
 
 async function fetchLocationCoordinates(location) {
-   const response = await fetch(
-      `https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=163a88340501cc3338e7b7a9919e470f`
-   );
+   try {
+      const response = await fetch(
+         `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}`,
+         { mode: 'cors' }
+      );
 
-   const coordinatesJson = await response.json();
-   return coordinatesJson[0];
+      if (!response.ok) {
+         throw new Error('location not found');
+      }
+
+      const responseJson = await response.json();
+
+      return responseJson.coord;
+   } catch (error) {
+      throw new Error('location not found');
+   }
 }
 
 async function fetchApiWeatherData(cityData) {
    const response = await fetch(
-      `https://api.openweathermap.org/data/3.0/onecall?lat=${cityData.lat}&lon=${cityData.lon}&units=metric&exclude=alerts,minutely&appid=163a88340501cc3338e7b7a9919e470f`
+      `https://api.openweathermap.org/data/3.0/onecall?lat=${cityData.lat}&lon=${cityData.lon}&units=metric&exclude=alerts,minutely&appid=${API_KEY}`,
+      { mode: 'cors' }
    );
+
+   if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+   }
 
    const weatherData = await response.json();
    return weatherData;
