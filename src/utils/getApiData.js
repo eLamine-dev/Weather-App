@@ -76,7 +76,7 @@ function processFetchedData(weatherData, cityData) {
       hourly: { hours: [], temperatures: [] },
    };
 
-   const timeNow = new Date();
+   const timeNow = fixTimeZone(new Date(), weatherData.timezone);
 
    if (
       timeNow.getTime() < processedData.today.sunset.getTime() &&

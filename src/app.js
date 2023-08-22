@@ -6,7 +6,7 @@ import updateBackground from './utils/updateBackground';
 // import './assets/images/scattered clouds.jpg';
 
 document.addEventListener('DOMContentLoaded', () => {
-   displayApp('London');
+   displayApp('British Columbia');
 });
 
 function addEventListeners() {

@@ -3,7 +3,7 @@
 :root {
    --white: #f6fbff;
    --less-transparent: #bae5fd52;
-   --transparent-white: #bae5fd33;
+   --transparent: #bae5fd28;
    --gray-text: #d0efff;
 }
 
@@ -11,24 +11,27 @@ body {
    height: 100vh;
    width: 100vw;
    display: flex;
-   align-items: center;
+   align-items: stretch;
    justify-content: center;
    font-family: 'Outfit', sans-serif;
    -webkit-background-size: cover;
    -moz-background-size: cover;
    -o-background-size: cover;
    background-size: cover;
+   padding: 7rem 21rem;
+   box-sizing: border-box;
 }
 
 app-view {
    border: 0.3rem solid var(--white);
    border-radius: 0.7rem;
-   height: 80vh;
-   width: 75vw;
+   /* height: 80vh;
+   width: 75vw; */
    display: grid;
    grid-template-columns: 1fr 400px;
    color: var(--white);
    background-color: #00000042;
+   flex: 1;
 }
 
 .main-section {
@@ -114,7 +117,7 @@ app-view {
 
 .side-info {
    padding: 1rem;
-   /* background-color: var(--transparent-white); */
+   /* background-color: var(--transparent); */
    display: flex;
    gap: 0.5rem;
    flex-direction: column;
@@ -149,7 +152,7 @@ app-view {
 #chart-container {
    display: flex;
    flex-direction: column;
-   background-color: var(--transparent-white);
+   background-color: var(--transparent);
    border-radius: 0.6rem;
    padding: 0.4rem;
    justify-content: space-between;
@@ -193,7 +196,7 @@ app-view {
 .forecast-day:not(:last-child),
 .extra-data-item:not(:last-child),
 .sunrise {
-   border-bottom: var(--transparent-white) solid 1px;
+   border-bottom: var(--transparent) solid 1px;
 }
 
 .day-icon,
