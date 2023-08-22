@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function addEventListeners() {
-   document.querySelector('form').addEventListener('submit', (e) => {
+   const searchForm = document.querySelector('form');
+   searchForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const searchValue = document.querySelector('.search-input').value;
 
@@ -19,14 +20,36 @@ function addEventListeners() {
 }
 
 async function displayApp(location) {
+   const body = document.querySelector('body');
+   showLoadingSpinner();
    const data = await fetchApiData(location);
    const appView = new AppView(data);
-   if (document.querySelector('app-view')) {
-      document.querySelector('app-view').remove();
-   }
+
+   const oldView = document.querySelector('app-view');
+
+   if (oldView) oldView.remove();
 
    updateBackground(data.current);
-
-   document.body.appendChild(appView);
+   hideLoadingSpinner();
+   body.appendChild(appView);
    addEventListeners();
+}
+
+function hideLoadingSpinner() {
+   if (document.querySelector('.loading-spinner')) {
+      document.querySelector('.loading-spinner').remove();
+   }
+}
+
+function showLoadingSpinner() {
+   const loadingSpinner = document.createElement('div');
+   loadingSpinner.innerHTML = `
+      <div class="sp sp-circle"></div>
+   `;
+   loadingSpinner.classList.add('loading-spinner');
+   if (document.querySelector('app-view')) {
+      document.querySelector('form').appendChild(loadingSpinner);
+   } else {
+      document.querySelector('body').appendChild(loadingSpinner);
+   }
 }

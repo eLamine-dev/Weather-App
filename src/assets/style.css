@@ -30,7 +30,7 @@ app-view {
    display: grid;
    grid-template-columns: 1fr 400px;
    color: var(--white);
-   background-color: #00000042;
+   background-color: #0000005a;
    flex: 1;
 }
 
@@ -116,8 +116,7 @@ app-view {
 }
 
 .side-info {
-   padding: 1rem;
-   /* background-color: var(--transparent); */
+   padding: 0.5rem;
    display: flex;
    gap: 0.5rem;
    flex-direction: column;
@@ -128,7 +127,7 @@ app-view {
    scrollbar-width: none;
 }
 
-.side-info ::-webkit-scrollbar {
+.side-info::-webkit-scrollbar {
    display: none;
 }
 
@@ -153,7 +152,7 @@ app-view {
    display: flex;
    flex-direction: column;
    background-color: var(--transparent);
-   border-radius: 0.6rem;
+   border-radius: 0.7rem;
    padding: 0.4rem;
    justify-content: space-between;
 }
@@ -220,6 +219,7 @@ app-view {
    -webkit-border-radius: 1rem;
    border-radius: 1rem;
    justify-content: center;
+   position: relative;
 }
 
 .search-bar > .search-input {
@@ -229,7 +229,7 @@ app-view {
    width: 9rem;
    line-height: 1rem;
    padding: 0 1rem;
-   background-color: var(--less-transparent);
+   background-color: var(--transparent);
    color: var(--white);
    border: 0;
    -webkit-border-radius: 1rem 0 0 1rem;
@@ -249,7 +249,7 @@ app-view {
 .search-bar > button {
    outline: 0;
    background: none;
-   background-color: var(--less-transparent);
+   background-color: var(--transparent);
    height: 2rem;
    width: 3rem;
    text-align: center;
@@ -267,7 +267,7 @@ app-view {
 }
 
 .search-bar > button:hover {
-   background-color: var(--gray-text);
+   background-color: var(--white);
 }
 
 .dt-w-e {
@@ -348,4 +348,54 @@ app-view {
    height: 3.8rem;
    border-radius: 50%;
    border: 3px solid var(--less-transparent);
+}
+
+.search-bar .loading-spinner {
+   position: absolute;
+   right: 10%;
+}
+
+.search-bar .sp {
+   width: 1rem;
+   height: 1rem;
+}
+
+.loading-spinner {
+   padding: 2rem;
+   border-radius: 50%;
+
+   color: var(--white);
+   align-self: center;
+}
+
+.sp {
+   width: 4rem;
+   height: 4rem;
+   clear: both;
+   /* margin: 3rem auto; */
+}
+
+.sp-circle {
+   border: 0.3rem #7dd3fc solid;
+   border-top: 0.3rem #0369a1 solid;
+   border-radius: 50%;
+   -webkit-animation: spCircRot 0.6s infinite linear;
+   animation: spCircRot 0.6s infinite linear;
+}
+
+@-webkit-keyframes spCircRot {
+   from {
+      -webkit-transform: rotate(0deg);
+   }
+   to {
+      -webkit-transform: rotate(359deg);
+   }
+}
+@keyframes spCircRot {
+   from {
+      transform: rotate(0deg);
+   }
+   to {
+      transform: rotate(359deg);
+   }
 }

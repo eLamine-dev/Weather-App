@@ -5,12 +5,7 @@ class AppView extends HTMLElement {
    constructor(data) {
       super();
       this.data = data;
-      console.log(data);
       this.render(this.data);
-   }
-
-   connectedCallback() {
-      this.createHourlyChart();
    }
 
    render(data) {
@@ -170,6 +165,10 @@ class AppView extends HTMLElement {
          <div class="date">${date}</div>`;
 
       setTimeout(this.updateTimeDate.bind(this), 6000);
+   }
+
+   connectedCallback() {
+      this.createHourlyChart();
    }
 
    createHourlyChart() {
