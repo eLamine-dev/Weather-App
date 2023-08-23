@@ -7,7 +7,7 @@ import { hideLoadingSpinner, showLoadingSpinner } from './utils/loadingSpinner';
 
 async function displayApp(location) {
    const body = document.querySelector('body');
-
+   showLoadingSpinner();
    const data = await fetchApiData(location);
    const appView = new AppView(data);
    const oldView = document.querySelector('app-view');
@@ -28,6 +28,5 @@ function addEventListeners() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-   showLoadingSpinner();
    displayApp('Algiers');
 });
