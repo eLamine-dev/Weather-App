@@ -25,8 +25,6 @@ body {
 app-view {
    border: 0.3rem solid var(--white);
    border-radius: 0.7rem;
-   /* height: 80vh;
-   width: 75vw; */
    display: grid;
    grid-template-columns: 1fr 400px;
    color: var(--white);
@@ -397,4 +395,33 @@ app-view {
    to {
       transform: rotate(359deg);
    }
+}
+
+@media only screen and (max-width: 700px) {
+   body {
+      padding: 0;
+      height: auto;
+      overflow: scroll;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+   }
+
+   body::-webkit-scrollbar {
+      display: none;
+   }
+
+   app-view {
+      border: none;
+      grid-template-columns: 1fr;
+      grid-template-rows: 2fr 3fr;
+      border-radius: 0;
+   }
+
+   /* .main-section {
+      flex: 1;
+   } */
+
+   /* .side-info {
+      overflow: hidden;
+   } */
 }

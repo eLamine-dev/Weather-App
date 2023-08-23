@@ -37,7 +37,9 @@ async function fetchLocationCoordinates(location) {
 
       const responseJson = await response.json();
 
-      return responseJson.coord;
+      console.log(responseJson);
+
+      return responseJson;
    } catch (error) {
       throw new Error('location not found');
    }
@@ -45,7 +47,7 @@ async function fetchLocationCoordinates(location) {
 
 async function fetchApiWeatherData(cityData) {
    const response = await fetch(
-      `https://api.openweathermap.org/data/3.0/onecall?lat=${cityData.lat}&lon=${cityData.lon}&units=metric&exclude=alerts,minutely&appid=${API_KEY}`,
+      `https://api.openweathermap.org/data/3.0/onecall?lat=${cityData.coord.lat}&lon=${cityData.coord.lon}&units=metric&exclude=alerts,minutely&appid=${API_KEY}`,
       { mode: 'cors' }
    );
 
@@ -54,6 +56,8 @@ async function fetchApiWeatherData(cityData) {
    }
 
    const weatherData = await response.json();
+   console.log(weatherData);
+
    return weatherData;
 }
 
@@ -61,7 +65,7 @@ function processFetchedData(weatherData, cityData) {
    const processedData = {
       location: {
          name: cityData.name,
-         country: cityData.country,
+         country: cityData.sys.country,
          timezone: weatherData.timezone,
       },
       current: {
