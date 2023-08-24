@@ -1,5 +1,6 @@
-const { utcToZonedTime, format } = require('date-fns-tz');
-import fixTimeZone from './utils/fixTimeZone';
+import { format } from 'date-fns';
+
+const { utcToZonedTime } = require('date-fns-tz');
 
 class AppView extends HTMLElement {
    constructor(data) {
@@ -22,6 +23,8 @@ class AppView extends HTMLElement {
                      type="text"
                      class="search-input"
                      placeholder="Search City..."
+                     required
+                     minlength ="2"
                   />
                   <button type="submit"><i class="fas fa-search"></i></button>
                </form>
@@ -152,7 +155,7 @@ class AppView extends HTMLElement {
    }
 
    updateTimeDate() {
-      const zonedDate = fixTimeZone(new Date(), this.data.location.timezone);
+      const zonedDate = utcToZonedTime(new Date(), this.data.location.timezone);
       const time = format(zonedDate, 'hh:mm aa', {
          timeZone: this.data.location.timezone,
       });

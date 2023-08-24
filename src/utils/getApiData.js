@@ -1,48 +1,32 @@
 import { format, fromUnixTime, isToday, isTomorrow } from 'date-fns';
-import fixTimeZone from './fixTimeZone';
+
+const { utcToZonedTime } = require('date-fns-tz');
 
 const API_KEY = '163a88340501cc3338e7b7a9919e470f';
 
 export default async function getWeatherData(location) {
-   let cityData;
-   let weatherData;
+   const cityData = await fetchLocationCoordinates(location);
 
-   try {
-      cityData = await fetchLocationCoordinates(location);
-   } catch (error) {
-      console.log(error);
-      return;
-   }
+   const weatherData = await fetchApiWeatherData(cityData);
 
-   try {
-      weatherData = await fetchApiWeatherData(cityData);
-      const processedData = processFetchedData(weatherData, cityData);
+   const data = processFetchedData(cityData, weatherData);
 
-      return processedData;
-   } catch (error) {
-      console.log(error);
-   }
+   return data;
 }
 
 async function fetchLocationCoordinates(location) {
-   try {
-      const response = await fetch(
-         `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}`,
-         { mode: 'cors' }
-      );
+   const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}`,
+      { mode: 'cors' }
+   );
 
-      if (!response.ok) {
-         throw new Error('location not found');
-      }
-
-      const responseJson = await response.json();
-
-      console.log(responseJson);
-
-      return responseJson;
-   } catch (error) {
+   if (!response.ok) {
       throw new Error('location not found');
    }
+
+   const responseJson = await response.json();
+
+   return responseJson;
 }
 
 async function fetchApiWeatherData(cityData) {
@@ -52,16 +36,15 @@ async function fetchApiWeatherData(cityData) {
    );
 
    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`Server not available`);
    }
 
-   const weatherData = await response.json();
-   console.log(weatherData);
+   const responseJson = await response.json();
 
-   return weatherData;
+   return responseJson;
 }
 
-function processFetchedData(weatherData, cityData) {
+function processFetchedData(cityData, weatherData) {
    const processedData = {
       location: {
          name: cityData.name,
@@ -81,11 +64,11 @@ function processFetchedData(weatherData, cityData) {
          humidity: weatherData.daily[0].humidity,
          wind_speed: weatherData.daily[0].wind_speed,
          wind_deg: weatherData.daily[0].wind_deg,
-         sunrise: fixTimeZone(
+         sunrise: utcToZonedTime(
             fromUnixTime(weatherData.daily[0].sunrise),
             weatherData.timezone
          ),
-         sunset: fixTimeZone(
+         sunset: utcToZonedTime(
             fromUnixTime(weatherData.daily[0].sunset),
             weatherData.timezone
          ),
@@ -101,7 +84,7 @@ function processFetchedData(weatherData, cityData) {
       hourly: { hours: [], temperatures: [] },
    };
 
-   const timeNow = fixTimeZone(new Date(), weatherData.timezone);
+   const timeNow = utcToZonedTime(new Date(), weatherData.timezone);
 
    if (
       timeNow.getTime() < processedData.today.sunset.getTime() &&
@@ -139,7 +122,7 @@ function processFetchedData(weatherData, cityData) {
       } else {
          processedData.hourly.hours.push(
             format(
-               fixTimeZone(
+               utcToZonedTime(
                   fromUnixTime(weatherData.hourly[i].dt),
                   weatherData.timezone
                ),

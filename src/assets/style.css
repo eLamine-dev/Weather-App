@@ -352,6 +352,10 @@ app-view {
    right: 10%;
 }
 
+.search-bar .loading-msg {
+   display: none;
+}
+
 .search-bar .sp {
    width: 1rem;
    height: 1rem;
@@ -380,6 +384,9 @@ app-view {
    animation: spCircRot 0.6s infinite linear;
 }
 
+.loading-msg {
+   color: black;
+}
 @-webkit-keyframes spCircRot {
    from {
       -webkit-transform: rotate(0deg);

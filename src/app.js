@@ -1,21 +1,27 @@
 import './assets/reset.css';
 import './assets/style.css';
 import AppView from './appView';
-import fetchApiData from './utils/getApiData';
+import getWeatherData from './utils/getApiData';
 import updateBackground from './utils/updateBackground';
 import { hideLoadingSpinner, showLoadingSpinner } from './utils/loadingSpinner';
+import handleError from './utils/handleError';
 
 async function displayApp(location) {
    const body = document.querySelector('body');
    showLoadingSpinner();
-   const data = await fetchApiData(location);
-   const appView = new AppView(data);
-   const oldView = document.querySelector('app-view');
-   if (oldView) oldView.remove();
-   updateBackground(data.current);
+   try {
+      const data = await getWeatherData(location);
+      const appView = new AppView(data);
+      const oldView = document.querySelector('app-view');
+      if (oldView) oldView.remove();
+      updateBackground(data.current);
+      body.appendChild(appView);
+      addEventListeners();
+   } catch (error) {
+      handleError(error);
+   }
+
    hideLoadingSpinner();
-   body.appendChild(appView);
-   addEventListeners();
 }
 
 function addEventListeners() {

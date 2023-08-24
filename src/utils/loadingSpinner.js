@@ -7,8 +7,9 @@ export function hideLoadingSpinner() {
 export function showLoadingSpinner() {
    const loadingSpinner = document.createElement('div');
    loadingSpinner.innerHTML = `
-       <div class="sp sp-circle"></div>
-    `;
+      <div class="sp sp-circle"></div>
+      <div class="loading-msg">Loading...</div>
+   `;
    loadingSpinner.classList.add('loading-spinner');
    if (document.querySelector('app-view')) {
       document.querySelector('form').appendChild(loadingSpinner);
