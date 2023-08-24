@@ -61,7 +61,7 @@ function processFetchedData(cityData, weatherData) {
       },
 
       today: {
-         humidity: weatherData.daily[0].humidity,
+         humidity: Math.round(weatherData.daily[0].humidity),
          wind_speed: weatherData.daily[0].wind_speed,
          wind_deg: weatherData.daily[0].wind_deg,
          sunrise: utcToZonedTime(
@@ -74,7 +74,7 @@ function processFetchedData(cityData, weatherData) {
          ),
          pressure: weatherData.daily[0].pressure,
          uvi: weatherData.daily[0].uvi,
-         precipitation: weatherData.daily[0].pop * 100,
+         precipitation: Math.round(weatherData.daily[0].pop * 100),
          summary: weatherData.daily[0].summary,
          feels_like: Math.round(weatherData.daily[0].feels_like.day),
       },

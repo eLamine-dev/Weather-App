@@ -203,7 +203,7 @@ app-view {
 .day-icon,
 .current-icon {
    height: 2rem;
-   filter: brightness(2) saturate(2);
+   filter: brightness(2.4) saturate(2);
 }
 
 .extra-data-item,

@@ -9,6 +9,7 @@ import handleError from './utils/handleError';
 async function displayApp(location) {
    const body = document.querySelector('body');
    showLoadingSpinner();
+
    try {
       const data = await getWeatherData(location);
       const appView = new AppView(data);
