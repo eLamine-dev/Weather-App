@@ -5,6 +5,7 @@ export default function handleError(error) {
       searchInput.reportValidity();
       searchInput.setCustomValidity('');
    } else {
-      document.querySelector('.loading-msg').textContent = error.message;
+      document.querySelector('body').innerHTML = `
+         <div class="error-message"><i class="fa-solid fa-triangle-exclamation"></i> ${error.message}</div>`;
    }
 }
